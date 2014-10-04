@@ -1,9 +1,13 @@
-# Script By Ferran Fabregas (ferri.fc@gmail.com)
+# Original Script By Ferran Fabregas (ferri.fc@gmail.com)
+#Edited By M Routledge . Kernel Panic
+#mark@mroutledge.co.uk
+#
+# Pass the filename of the image file as a parameter, works with
+# jpgs and pngs, but does not seem to work with GIFs.
+
 import Image
 import sys
 import math
-#sys.path.append("./mcpi/api/python/mcpi")
-#import minecraft
 from mcpi import minecraft
  
 # COLOR MAPPING
@@ -38,7 +42,22 @@ def colormap(pixel):
  
 # LOAD IMAGE FILE
 #im= Image.open(sys.argv[1])
-im = Image.open("SHTC_logo.jpg")
+#im = Image.open("qbert.jpg")
+im = Image.open(sys.argv[1])
+width = im.size[0]
+height = im.size[1]
+ratio = height / float(width)
+
+maxsize = 64
+
+if width > height:
+    rwidth = maxsize
+    rheight = int(rwidth * ratio)
+else:
+    rheight = maxsize
+    rwidth = int(rheight / ratio)
+
+im = im.resize((rwidth,rheight))
 pixels=im.load()
 print im.size
  
